@@ -1,0 +1,36 @@
+<section class="admin-users">
+  <h3>Utilisateurs</h3>
+  <p class="info">Creer, modifier, reinitialiser ou supprimer des comptes.</p>
+
+  <form class="user-form" [formGroup]="form" (ngSubmit)="save()">
+    <input type="text" placeholder="Nom" formControlName="name">
+    <input type="email" placeholder="Email" formControlName="email">
+    <select formControlName="role">
+      <option value="customer">Client</option>
+      <option value="admin">Admin</option>
+    </select>
+    <input type="password" placeholder="Mot de passe" formControlName="password">
+    <div class="actions">
+      <button type="submit" [disabled]="form.invalid">{{ editing ? 'Mettre a jour' : 'Creer' }}</button>
+      <button type="button" (click)="resetForm()">Annuler</button>
+    </div>
+  </form>
+
+  <p class="status err" *ngIf="error">{{ error }}</p>
+  <p class="status ok" *ngIf="message">{{ message }}</p>
+
+  <ul class="user-list">
+    @for (user of users; track user.id) {
+      <li>
+        <div>
+          <strong>{{ user.name }}</strong> - {{ user.email }} ({{ user.role }})
+        </div>
+        <div class="row-actions">
+          <button type="button" (click)="edit(user)">Editer</button>
+          <button type="button" (click)="sendReset(user)" [disabled]="resetLoadingId === user.id">Reset MDP</button>
+          <button type="button" class="danger" (click)="remove(user.id)" [disabled]="user.id === me?.id">Supprimer</button>
+        </div>
+      </li>
+    }
+  </ul>
+</section>

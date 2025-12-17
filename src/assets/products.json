@@ -1,0 +1,7 @@
+[
+  { "id": 1, "title": "Roses",        "description": "Bouquet de roses rouges (12 tiges)", "price": 24.90, "stock": 15, "image": "assets/products/roses.jpg",        "categories": ["Fleurs"] },
+  { "id": 2, "title": "Tulipes",      "description": "Tulipes colorées",                    "price": 14.50, "stock": 20, "image": "assets/products/tulipes.jpg",      "categories": ["Fleurs"] },
+  { "id": 3, "title": "Lys",          "description": "Lys blancs élégants",                 "price": 19.90, "stock": 10, "image": "assets/products/lys.jpg",          "categories": ["Fleurs"] },
+  { "id": 4, "title": "Marguerites",  "description": "Bouquet de marguerites champêtres",   "price": 12.90, "stock": 25, "image": "assets/products/marguerites.jpg",  "categories": ["Fleurs"] },
+  { "id": 5, "title": "Orchidées",    "description": "Orchidée en pot",                     "price": 29.90, "stock": 8,  "image": "assets/products/orchidees.jpg",    "categories": ["Fleurs"] }
+]

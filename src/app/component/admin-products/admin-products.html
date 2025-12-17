@@ -1,0 +1,43 @@
+<section class="admin-products">
+  <h3>Gestion des produits</h3>
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="product-form">
+    <input formControlName="name" placeholder="Nom du produit">
+    <input type="number" formControlName="price" placeholder="Prix">
+    <input type="number" formControlName="stock" placeholder="Stock">
+
+    <select formControlName="categories" multiple>
+      @for (cat of categories; track cat.id) {
+        <option [value]="cat.id">{{ cat.name }}</option>
+      }
+    </select>
+
+    <textarea formControlName="description" placeholder="Description"></textarea>
+    <input formControlName="image" placeholder="URL image">
+
+    <div class="actions">
+      <button type="submit" [disabled]="form.invalid">
+        {{ editing ? 'Mettre a jour' : 'Creer' }}
+      </button>
+      <button type="button" (click)="reset()">Annuler</button>
+    </div>
+  </form>
+
+  <p class="error" *ngIf="error">{{ error }}</p>
+
+  <ul class="product-list">
+    @for (product of products; track product.id) {
+      <li>
+        <div>
+          <strong>{{ product.name }}</strong> - {{ product.price | number:'1.2-2' }} EUR
+          <span>Stock: {{ product.stock }}</span>
+          <span>Categories: {{ formatCategories(product) }}</span>
+        </div>
+        <div class="row-actions">
+          <button type="button" (click)="edit(product)">Modifier</button>
+          <button type="button" (click)="remove(product)">Supprimer</button>
+        </div>
+      </li>
+    }
+  </ul>
+</section>

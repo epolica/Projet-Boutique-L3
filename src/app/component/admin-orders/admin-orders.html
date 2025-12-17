@@ -1,0 +1,33 @@
+<section class="admin-orders">
+  <h3>Commandes</h3>
+  <p class="info">Toutes les commandes valides sont listees ci-dessous.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Client</th>
+        <th>Total</th>
+        <th>Statut</th>
+        <th>Articles</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (order of orders; track order.id) {
+        <tr>
+          <td>{{ order.id }}</td>
+          <td>{{ order.user?.name ?? 'Inconnu' }}</td>
+          <td>{{ order.total | number:'1.2-2' }} EUR</td>
+          <td>{{ order.status }}</td>
+          <td>
+            <ul>
+              @for (item of order.items; track item.id) {
+                <li>{{ item.product?.name }} (x{{ item.qty }})</li>
+              }
+            </ul>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>

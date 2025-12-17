@@ -1,0 +1,62 @@
+<app-navbar />
+<section class="auth-page">
+  <div class="auth-card">
+    <div class="header">
+      <p class="eyebrow">Acces securise</p>
+      <h2>Connexion</h2>
+      <p class="subtitle">Retrouve ton panier et tes commandes en un clic.</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" formControlName="email" class="form-control" placeholder="ex: utilisateur@mail.com">
+        @if (email?.invalid && email?.touched) {
+          <small class="err">Adresse email invalide</small>
+        }
+      </div>
+
+      <div class="form-group">
+        <label>Mot de passe</label>
+        <input type="password" formControlName="password" class="form-control" placeholder="••••••••">
+      </div>
+
+      <button class="btn-primary w-100" type="submit" [disabled]="form.invalid">Se connecter</button>
+
+      <p class="hint">
+        Pas encore de compte ?
+        <a routerLink="/signup">Creer un compte</a>
+      </p>
+    </form>
+
+    <div class="divider">Mot de passe oublie ?</div>
+
+    <form [formGroup]="resetForm" (ngSubmit)="sendResetLink()" class="reset-form">
+      <div class="form-group">
+        <label>Email de recuperation</label>
+        <input type="email" formControlName="email" class="form-control" placeholder="email@example.com">
+        @if (resetEmail?.invalid && resetEmail?.touched) {
+          <small class="err">Adresse email invalide</small>
+        }
+      </div>
+      <button class="btn-ghost w-100" type="submit" [disabled]="resetForm.invalid || resetLoading">
+        {{ resetLoading ? 'Envoi...' : 'Recevoir un lien de reinitialisation' }}
+      </button>
+      @if (resetMessage) {
+        <p class="status ok">{{ resetMessage }}</p>
+      }
+      @if (resetError) {
+        <p class="status err">{{ resetError }}</p>
+      }
+      <p class="hint small">
+        Deja un token ? <a routerLink="/reset-password">Reinitialiser ici</a>
+      </p>
+    </form>
+  </div>
+
+  <aside class="auth-aside">
+    <h3>Nouveau ?</h3>
+    <p>Inscris-toi pour profiter des offres, garder tes favoris et suivre tes commandes.</p>
+    <a routerLink="/signup" class="btn-ghost">Je m inscris</a>
+  </aside>
+</section>

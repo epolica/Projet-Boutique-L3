@@ -1,0 +1,25 @@
+<section class="admin-categories">
+  <h3>Categories</h3>
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="category-form">
+    <input formControlName="name" placeholder="Nom de la categorie">
+    <div class="actions">
+      <button type="submit" [disabled]="form.invalid">{{ editing ? 'Mettre a jour' : 'Creer' }}</button>
+      <button type="button" (click)="reset()">Annuler</button>
+    </div>
+  </form>
+
+  <p class="error" *ngIf="error">{{ error }}</p>
+
+  <ul class="category-list">
+    @for (category of categories; track category.id) {
+      <li>
+        <span>{{ category.name }}</span>
+        <div class="row-actions">
+          <button type="button" (click)="edit(category)">Modifier</button>
+          <button type="button" (click)="remove(category)">Supprimer</button>
+        </div>
+      </li>
+    }
+  </ul>
+</section>

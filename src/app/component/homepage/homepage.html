@@ -1,0 +1,64 @@
+<app-navbar />
+<section class="homepage">
+  <div class="hero">
+    <div class="copy">
+      <p class="eyebrow">Livraison rapide · Qualite garantie</p>
+      <h1>Bienvenue dans notre boutique</h1>
+      <p class="lead">Decouvrez nos meilleures ventes et nos nouveautes selectionnees pour vous.</p>
+      <div class="hero-btns">
+        <a routerLink="/cart" class="btn-primary">Voir mon panier</a>
+        @if (!(connected$ | async)) {
+          <a routerLink="/signup" class="btn-ghost">Creer un compte</a>
+        }
+      </div>
+      <div class="stats">
+        <div><span>24h</span><small>Expedition</small></div>
+        <div><span>Satisfait</span><small>Ou rembourse</small></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="floating-card">
+        <p class="mini-title">Selection du jour</p>
+        <p class="mini-desc">Ajoutez vos coups de coeur et validez en un clic.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="filters">
+    <h2>Categories</h2>
+    <div class="chips">
+      <button (click)="filter(0)" [class.active]="selected===0">Toutes</button>
+      @for (c of categories; track c.id) {
+        <button (click)="filter(c.id)" [class.active]="selected===c.id">{{c.name}}</button>
+      }
+    </div>
+  </div>
+
+  <div class="product-section">
+    <div class="section-header">
+      <div>
+        <p class="eyebrow">Nos best sellers</p>
+        <h3>Faites-vous plaisir</h3>
+      </div>
+      <a routerLink="/cart" class="link">Voir le panier</a>
+    </div>
+
+    @if (loading) { <div class="skeleton">Chargement...</div> }
+    @if (!loading && error) { <div class="alert">{{ error }}</div> }
+
+    <div class="product-grid">
+      @for (p of products; track p.id) {
+        <article class="product-card">
+          <div class="thumb">
+            <img [src]="p.image || 'assets/placeholder.png'" alt="{{p.name}}">
+          </div>
+          <div class="meta">
+            <h4>{{ p.name }}</h4>
+            <p class="price">{{ p.price | number:'1.2-2' }} EUR</p>
+          </div>
+          <button (click)="addToCart(p)" class="btn-add">Ajouter au panier</button>
+        </article>
+      }
+    </div>
+  </div>
+</section>

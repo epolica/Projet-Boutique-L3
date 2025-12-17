@@ -1,0 +1,84 @@
+<!-- src/app/component/cart/cart.html -->
+<app-navbar />
+<section class="cart-page">
+  <div class="cart-header">
+    <div>
+      <p class="eyebrow">Livraison rapide · Retour sous 30 jours</p>
+      <h1>Mon panier</h1>
+      <p>Récapitulatif des articles ajoutés.</p>
+    </div>
+    <a routerLink="/" class="link">Continuer mes achats</a>
+  </div>
+
+  <ng-container *ngIf="(cart.items$ | async) as items">
+    <div class="empty" *ngIf="!items.length">
+      Votre panier est vide pour le moment.
+    </div>
+
+    <div class="cart-grid" *ngIf="items.length">
+      <div class="cart-items">
+        <article class="item" *ngFor="let l of items; trackBy: trackById">
+          <div class="thumb">
+            <img [src]="l.imageUrl || 'assets/placeholder.png'" [alt]="l.name">
+          </div>
+          <div class="details">
+            <h3>{{ l.name }}</h3>
+            <p class="price">{{ l.price | number:'1.2-2' }} EUR</p>
+            <div class="qty">
+              <label>Quantité</label>
+              <input type="number"
+                     [value]="l.qty"
+                     min="1"
+                     (input)="cart.updateQty(l.id, $any($event.target).valueAsNumber || 1)">
+            </div>
+          </div>
+          <div class="actions">
+          <div class="line-total">{{ (l.price * l.qty) | number:'1.2-2' }} EUR</div>
+          <button type="button" class="link" (click)="cart.remove(l.id)">Supprimer</button>
+        </div>
+      </article>
+    </div>
+
+      <aside class="summary">
+        <h2>Résumé</h2>
+        <div class="row">
+          <span>Sous-total</span>
+          <span>{{ (subtotal$ | async) | number:'1.2-2' }} EUR</span>
+        </div>
+        <div class="row">
+          <span>Remise</span>
+          <span>
+            @if ((coupon$ | async)?.code) {
+              -{{ ((subtotal$ | async)! * ((coupon$ | async)?.rate || 0)) | number:'1.2-2' }} EUR
+            } @else {
+              0 EUR
+            }
+          </span>
+        </div>
+        <div class="row">
+          <span>Livraison</span>
+          <span class="badge">Offerte</span>
+        </div>
+        <div class="row total">
+          <span>Total à payer</span>
+          <strong>{{ (total$ | async) | number:'1.2-2' }} EUR</strong>
+        </div>
+
+        <div class="coupon">
+          <label for="coupon">Code promo</label>
+          <div class="coupon-row">
+            <input id="coupon" type="text" [(ngModel)]="couponCode" placeholder="Votre code">
+            <button type="button" (click)="applyCoupon()">Appliquer</button>
+          </div>
+          <small class="hint" [class.error]="couponMessage === 'Coupon invalide'">{{ couponMessage }}</small>
+        </div>
+
+        <a class="btn-primary"
+           routerLink="/checkout"
+           [class.disabled]="!items.length">
+          Passer au paiement
+        </a>
+      </aside>
+    </div>
+  </ng-container>
+</section>

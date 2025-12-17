@@ -1,0 +1,19 @@
+<section class="admin">
+  <header class="admin-header">
+    <h2>Administration</h2>
+    <a class="btn-home" routerLink="/">Accueil du site</a>
+  </header>
+  <nav class="tabs">
+    <button (click)="tab = 'products'" [class.active]="tab === 'products'">Produits</button>
+    <button (click)="tab = 'categories'" [class.active]="tab === 'categories'">Categories</button>
+    <button (click)="tab = 'orders'" [class.active]="tab === 'orders'">Commandes</button>
+    <button (click)="tab = 'users'" [class.active]="tab === 'users'">Utilisateurs</button>
+  </nav>
+
+  @switch (tab) {
+    @case ('products') { <app-admin-products /> }
+    @case ('categories') { <app-admin-categories /> }
+    @case ('orders') { <app-admin-orders /> }
+    @case ('users') { <app-admin-users /> }
+  }
+</section>

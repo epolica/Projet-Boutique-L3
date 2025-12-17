@@ -1,0 +1,44 @@
+<app-navbar />
+<section class="checkout-page">
+  <div class="checkout-header">
+    <h1>Validation de la commande</h1>
+    <p>Vérifiez vos articles avant de confirmer.</p>
+  </div>
+
+  <ng-container *ngIf="items.length; else empty">
+    <div class="content">
+      <div class="list">
+        <article class="line" *ngFor="let item of items; trackBy: trackById">
+          <div class="info">
+            <h3>{{ item.name }}</h3>
+            <p class="unit">{{ item.price | number:'1.2-2' }} EUR / unité</p>
+          </div>
+          <div class="qty">
+            <span>Qté: {{ item.qty }}</span>
+          </div>
+          <div class="line-total">
+            {{ (item.price * item.qty) | number:'1.2-2' }} EUR
+          </div>
+        </article>
+      </div>
+
+      <aside class="summary">
+        <h2>Résumé</h2>
+        <div class="row">
+          <span>Total</span>
+          <strong>{{ total | number:'1.2-2' }} EUR</strong>
+        </div>
+        <button class="btn-primary" (click)="submit()" [disabled]="loading">
+          {{ loading ? 'Envoi...' : 'Confirmer la commande' }}
+        </button>
+        <p class="status ok" *ngIf="ok">Commande validée.</p>
+        <p class="status err" *ngIf="error">{{ error }}</p>
+        <a routerLink="/cart" class="link">Retour au panier</a>
+      </aside>
+    </div>
+  </ng-container>
+
+  <ng-template #empty>
+    <div class="empty">Votre panier est vide.</div>
+  </ng-template>
+</section>

@@ -1,0 +1,46 @@
+<app-navbar />
+<section class="profile-page">
+  <div class="card">
+    <h2>Mon profil</h2>
+    <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+      <div class="form-group">
+        <label>Nom</label>
+        <input type="text" formControlName="name" />
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" formControlName="email" />
+      </div>
+      <button class="btn-primary" type="submit" [disabled]="profileForm.invalid || loadingProfile">
+        {{ loadingProfile ? 'Enregistrement...' : 'Mettre a jour' }}
+      </button>
+      <p class="status ok" *ngIf="profileMessage">{{ profileMessage }}</p>
+      <p class="status err" *ngIf="profileError">{{ profileError }}</p>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Changer de mot de passe</h2>
+    <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+      <div class="form-group">
+        <label>Mot de passe actuel</label>
+        <input type="password" formControlName="current_password" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nouveau mot de passe</label>
+          <input type="password" formControlName="new_password" />
+        </div>
+        <div class="form-group">
+          <label>Confirmation</label>
+          <input type="password" formControlName="new_password_confirmation" />
+        </div>
+      </div>
+      <button class="btn-primary" type="submit" [disabled]="passwordForm.invalid || loadingPassword">
+        {{ loadingPassword ? 'Mise a jour...' : 'Changer le mot de passe' }}
+      </button>
+      <p class="status ok" *ngIf="passwordMessage">{{ passwordMessage }}</p>
+      <p class="status err" *ngIf="passwordError">{{ passwordError }}</p>
+    </form>
+  </div>
+</section>
